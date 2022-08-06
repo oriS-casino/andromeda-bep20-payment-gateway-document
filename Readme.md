@@ -327,6 +327,7 @@ là rỗng thì andromeda sẽ không thông báo nữa.
   - _tx_hash_ `string` mã giao dịch trên blockchain.
   - _tokens_ `float` số tiền đã gửi.
   - _token_name_ `string` tên tiền.
+  - _checksum_ `string`  = MD5(API-Key + Request ID) để kiểm tra độ tin cậy của request.
 
 ### Get User Address
 
