@@ -4,6 +4,7 @@ Cung cấp kênh thanh toán trên mạng Binance Smart Chain ứng với các l
 
 ## Mục lục
 
+- [Library](#library)
 - [Config](#config)
 - [Deployment](#deployment)
 - [Run Test](#run-test)
@@ -31,6 +32,10 @@ Cung cấp kênh thanh toán trên mạng Binance Smart Chain ứng với các l
         + [WithdrawTransaction](#withdrawtransaction)
 
 <small><i><a href='https://github.com/dangnguyendota'>email: dangnguyendota@gmail.com</a></i></small>
+
+## Library
+
+Client viết bằng Golang: https://github.com/dangnguyendota-casino/go-andromeda-client
 
 ## Config
 
@@ -311,23 +316,34 @@ giao dịch ghi nhận được, nếu vượt quá số lượng trên, gói ti
   là `ea16990b87483afaab3a4740a47a2c98`
 - Có thể thực hiện kiểm tra địa chỉ IP gửi gói tin này đến **Game Service** để tăng thêm tính bảo mật cho hệ thống.
 
+**!Lưu ý: Mỗi khi nhận được request này từ andromeda, lưu giao dịch vào database và kiểm tra lại mỗi lần nhận được request
+xem tx_hash này đã được insert trước đó chưa để tránh trường hơp hacker có thể tận dụng lại request để gửi nhiều lần để
+chuộc lợi từ 1 giao dịch.**
+
 ### Complete Transferred Tokens Redirect URL
 
-Sau khi chuyển tiền thành công vào ví người nhận, andromeda sẽ gửi thông báo sang 1 API Complete Transferred Tokens Redirect.
+Sau khi chuyển tiền thành công vào ví người nhận, andromeda sẽ gửi thông báo sang 1 API Complete Transferred Tokens
+Redirect.
 
-Game Service cung cấp API này để andromeda thông báo sang, nếu trong [config](#config) để trường _APIPostTokensTransferredURL_
+Game Service cung cấp API này để andromeda thông báo sang, nếu trong [config](#config) để trường _
+APIPostTokensTransferredURL_
 là rỗng thì andromeda sẽ không thông báo nữa.
 
 **Cấu trúc:**
+
 - **URL**: định nghĩa trong file config
 - **Method**: `POST`
-- **Body**: 
-  - _request_id_ `string` request id mà game service gửi lên trong [API Withdraw](#withdraw)
-  - _user_id_ `int` ID của người chơi 
-  - _tx_hash_ `string` mã giao dịch trên blockchain.
-  - _tokens_ `float` số tiền đã gửi.
-  - _token_name_ `string` tên tiền.
-  - _checksum_ `string`  = MD5(API-Key + Request ID) để kiểm tra độ tin cậy của request.
+- **Body**:
+    - _request_id_ `string` request id mà game service gửi lên trong [API Withdraw](#withdraw)
+    - _user_id_ `int` ID của người chơi
+    - _tx_hash_ `string` mã giao dịch trên blockchain.
+    - _tokens_ `float` số tiền đã gửi.
+    - _token_name_ `string` tên tiền.
+    - _checksum_ `string`  = MD5(API-Key + Request ID) để kiểm tra độ tin cậy của request.
+
+**!Lưu ý: Mỗi khi nhận được request này từ andromeda, lưu giao dịch vào database và kiểm tra lại mỗi lần nhận được request
+xem request_id này đã được complete trước đó chưa để tránh trường hơp hacker có thể tận dụng lại request để gửi nhiều lần để
+chuộc lợi từ 1 giao dịch.**
 
 ### Get User Address
 
