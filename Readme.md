@@ -288,10 +288,12 @@ giao dịch ghi nhận được, nếu vượt quá số lượng trên, gói ti
 
 **Thông tin API:**
 
-- _API URL:_ tự khai báo ở trong [Config](#config), ứng với API viết bên **Game Service**. (ví
+- **API URL:** tự khai báo ở trong [Config](#config), ứng với API viết bên **Game Service**. (ví
   dụ: https://game.service.com/api/v1/user-deposited)
-- _Method:_ POST
-- _Body_:
+- **Method:** POST
+- **Status Code:** **202** nếu thành công hoặc khác nếu thất bại, nếu trả về status code khác 202 Adromeda sẽ cố gắng
+  gửi lại thêm 2 lần nữa, không thành công sẽ lưu vào bảng failed_request.
+- **Body**:
     - _user_id_ `int` ID của người chơi
     - _tx_hash_ `string` mã giao dịch
     - _tokens_ `float` số lượng tokens nạp.
@@ -316,7 +318,8 @@ giao dịch ghi nhận được, nếu vượt quá số lượng trên, gói ti
   là `ea16990b87483afaab3a4740a47a2c98`
 - Có thể thực hiện kiểm tra địa chỉ IP gửi gói tin này đến **Game Service** để tăng thêm tính bảo mật cho hệ thống.
 
-**!Lưu ý: Mỗi khi nhận được request này từ andromeda, lưu giao dịch vào database và kiểm tra lại mỗi lần nhận được request
+**!Lưu ý: Mỗi khi nhận được request này từ andromeda, lưu giao dịch vào database và kiểm tra lại mỗi lần nhận được
+request
 xem tx_hash này đã được insert trước đó chưa để tránh trường hơp hacker có thể tận dụng lại request để gửi nhiều lần để
 chuộc lợi từ 1 giao dịch.**
 
@@ -333,6 +336,8 @@ là rỗng thì andromeda sẽ không thông báo nữa.
 
 - **URL**: định nghĩa trong file config
 - **Method**: `POST`
+- **Status Code:** **202** nếu thành công hoặc khác nếu thất bại, nếu trả về status code khác 202 Adromeda sẽ cố gắng
+  gửi lại thêm 2 lần nữa, không thành công sẽ lưu vào bảng failed_request.
 - **Body**:
     - _request_id_ `string` request id mà game service gửi lên trong [API Withdraw](#withdraw)
     - _user_id_ `int` ID của người chơi
@@ -341,8 +346,10 @@ là rỗng thì andromeda sẽ không thông báo nữa.
     - _token_name_ `string` tên tiền.
     - _checksum_ `string`  = MD5(API-Key + Request ID) để kiểm tra độ tin cậy của request.
 
-**!Lưu ý: Mỗi khi nhận được request này từ andromeda, lưu giao dịch vào database và kiểm tra lại mỗi lần nhận được request
-xem request_id này đã được complete trước đó chưa để tránh trường hơp hacker có thể tận dụng lại request để gửi nhiều lần để
+**!Lưu ý: Mỗi khi nhận được request này từ andromeda, lưu giao dịch vào database và kiểm tra lại mỗi lần nhận được
+request
+xem request_id này đã được complete trước đó chưa để tránh trường hơp hacker có thể tận dụng lại request để gửi nhiều
+lần để
 chuộc lợi từ 1 giao dịch.**
 
 ### Get User Address
