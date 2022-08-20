@@ -27,6 +27,7 @@ Cung cấp kênh thanh toán trên mạng Binance Smart Chain ứng với các l
     * [Get User Completed Withdraw Transactions](#get-user-completed-withdraw-transactions)
     * [Get User Pending Withdraw Transactions](#get-user-pending-withdraw-transactions)
     * [Withdraw](#withdraw)
+    * [Check Deposit Transaction](#check-deposit-transaction)
     * [Model](#model)
         + [DepositTransaction](#deposittransaction)
         + [WithdrawTransaction](#withdrawtransaction)
@@ -579,6 +580,28 @@ POST /api/v1/withdraw
 - **400** `Bad Request` dữ liệu gửi lên không hợp lệ.
 - **500** `Internal Server Error` không thể khởi tạo giao dịch.
 - **201** `Created` đã khởi tạo thành công giao dịch rút tiền.
+
+### Check Deposit Transaction
+
+API kiểm tra giao dịch thủ công và cập nhật vào database nếu giao dịch hoàn thành 
+
+```http request
+POST /api/v1/check-deposit-tx
+```
+
+**Request:**
+- _user_id_ `int` id người chơi 
+- _transaction_hash_ `string` mã giao dịch 
+
+**Response Status Code:**
+- _202_ success
+- _400_ user id hoặc transaction hash không hợp lệ.
+- _406_ giao dịch không tồn tại hoặc ở trạng thái thất bại.
+- _404_ không hỗ trợ loại token này.
+- _409_ giao dịch đã được hệ thống ghi nhận rồi.
+- _500_ không thể khởi tạo giao dịch vào cơ sở dư liệu.
+- _422_ giao dịch không hợp lệ (không phải giao dịch chuyển tiền loại này hoặc chuyển tới địa chỉ không chính xác)
+
 
 ### Model
 
