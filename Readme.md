@@ -2,6 +2,10 @@
 
 Cung cấp kênh thanh toán trên mạng Binance Smart Chain ứng với các loại token Bep20.
 
+Contact Me: https://t.me/DontBeSad_Cuz_MinhFatIsHere
+
+Email: dangnguyendota@gmail.com
+
 ## Mục lục
 
 - [Library](#library)
