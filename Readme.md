@@ -4,8 +4,6 @@ Cung cấp kênh thanh toán trên mạng Binance Smart Chain ứng với các l
 
 Contact Me: https://t.me/DontBeSad_Cuz_MinhFatIsHere
 
-Email: dangnguyendota@gmail.com
-
 ## Mục lục
 
 - [Library](#library)
